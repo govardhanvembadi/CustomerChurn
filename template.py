@@ -11,8 +11,8 @@ project_name = 'ChurnPrediction'
 
 files = [
     '.github/workflows/.gitkeep', ## needed for a .yaml file to maintain CI/CD pipelines code.
-    f"src/{project_name}/__init__.py", ##constructor file with 
-    f"src/{project_name}/components/__init__.py",
+    f"src/{project_name}/__init__.py", ##constructor file with folder named src/ChuronPrediction to make it as a module
+    f"src/{project_name}/components/__init__.py", #
     f"src/{project_name}/utils/__init__.py",
     f"src/{project_name}/config/__init__.py",
     f"src/{project_name}/config/configuration.py",
@@ -22,10 +22,10 @@ files = [
     "config/config.yaml",
     "dvc.yaml",
     "params.yaml",
-    "requirements.py",
+    "requirements.txt",
     "setup.py",
-    "research/trial.ipynb"
-
+    "research/trial.ipynb",
+    "templates/index.html"
 ]
 
 for filepath in files:
