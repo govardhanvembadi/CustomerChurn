@@ -1,25 +1,25 @@
 from typing import Any
 from ChurnPrediction.config.configuration import ConfigurationManager
-from ChurnPrediction.components.data_ingestion import DataIngestion
+from ChurnPrediction.components.data_validation import DataValidation
 from ChurnPrediction import logger
 
 
-STAGE_NAME =  'Data Ingestion Stage'
+STAGE_NAME =  'Data Validation Stage'
 
-class DataIngestionPipeline:
+class DataValidationPipeline:
     def __call__(self):
         pass
     def main(self):
         config = ConfigurationManager()
-        data_ingestion_config = config.get_data_ingestion_config()
-        data_ingestion = DataIngestion(config = data_ingestion_config)
-        data_ingestion.download_file()
+        data_validation_config = config.get_data_validation_config()
+        data_validation = DataValidation(config = data_validation_config)
+        data_validation.validate_all_columns()
 
 
 if __name__ == "__main__":
     try:
         logger.info(f"========= Stage {STAGE_NAME} started =========")
-        object = DataIngestionPipeline()
+        object = DataValidationPipeline()
         object.main()
         logger.info(f"========= Stage {STAGE_NAME} completed =========")
 
