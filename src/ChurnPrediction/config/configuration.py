@@ -1,8 +1,9 @@
 from ChurnPrediction.constants import *
 from ChurnPrediction.utils.common import read_yaml, create_directory
-from ChurnPrediction.entity.config_entity import DataIngestionConfig
-from ChurnPrediction.entity.config_entity import DataValidationConfig
-from ChurnPrediction.entity.config_entity import DataTransformationConfig
+from ChurnPrediction.entity.config_entity import (  DataIngestionConfig, 
+                                                    DataValidationConfig, 
+                                                    DataTransformationConfig, 
+                                                    ModelTrainerConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -59,5 +60,26 @@ class ConfigurationManager:
 
         return data_transformation_config
     
+
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        config = self.config.model_trainer
+        params = self.params.LogisticRegression
+        schema = self.schema.TARGET_COLUMN
+
+        create_directory([config.root_dir])
+        
+        model_trainer_config = ModelTrainerConfig(
+            root_dir = config.root_dir,
+            train_data_path = config.train_data_path,
+            test_data_path = config.test_data_path,
+            model_path = config.model_path,
+            C = params.C,
+            max_iter = params.max_iter,
+            penalty = params.penalty,
+            solver = params.solver,
+            target_column = list(schema.keys())[0]
+        )
+
+        return model_trainer_config
 
     

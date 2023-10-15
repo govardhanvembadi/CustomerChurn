@@ -22,3 +22,16 @@ class DataTransformationConfig:
     data_path: Path
     train_data_path: Path
     test_data_path: Path
+
+
+@dataclass(frozen = True)
+class ModelTrainerConfig:
+    root_dir: Path
+    train_data_path: Path
+    test_data_path: Path
+    model_path: Path
+    C: float
+    max_iter: int
+    penalty: str
+    solver: str
+    target_column: str
