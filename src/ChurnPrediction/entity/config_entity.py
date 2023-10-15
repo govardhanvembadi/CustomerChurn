@@ -14,3 +14,11 @@ class DataValidationConfig:
     STATUS_FILE: str
     data_dir: Path
     schema: dict
+
+
+@dataclass(frozen = True)
+class DataTransformationConfig:
+    root_dir: Path
+    data_path: Path
+    train_data_path: Path
+    test_data_path: Path

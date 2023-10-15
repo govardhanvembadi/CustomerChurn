@@ -2,6 +2,7 @@ from ChurnPrediction.constants import *
 from ChurnPrediction.utils.common import read_yaml, create_directory
 from ChurnPrediction.entity.config_entity import DataIngestionConfig
 from ChurnPrediction.entity.config_entity import DataValidationConfig
+from ChurnPrediction.entity.config_entity import DataTransformationConfig
 
 class ConfigurationManager:
     def __init__(
@@ -43,6 +44,20 @@ class ConfigurationManager:
         )
 
         return data_validation_config
+    
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        create_directory([config.root_dir])
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir = config.root_dir,
+            data_path = config.data_path,
+            train_data_path = config.train_data_path,
+            test_data_path = config.test_data_path
+        )
+
+        return data_transformation_config
     
 
     
