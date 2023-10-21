@@ -26,7 +26,7 @@ class ConfigurationManager:
 
         data_ingestion_config = DataIngestionConfig(
             root_dir = config.root_dir,
-            source_URL= config.source_URL,
+            dvc_file_path = config.dvc_file_path,
             local_data_file = config.local_data_file
         )
 

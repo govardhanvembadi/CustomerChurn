@@ -1,4 +1,5 @@
 import os
+import dvc.api
 import urllib.request as request
 from pathlib import Path
 from ChurnPrediction import logger
@@ -16,11 +17,10 @@ class DataIngestion:
             return: None
         """
         if not os.path.exists(self.config.local_data_file):
-            filename, headers = request.urlretrieve(
-                url = self.config.source_URL,
-                filename = self.config.local_data_file
-            )
-            logger.info(f'Downloaded {filename} to {self.config.local_data_file} with following info {headers}')
+            with dvc.api.open(self.config.dvc_file_path, repo = "https://github.com/Govardhan211103/CustomerChurn", mode = "rb") as dvc_file:
+                with open(self.config.local_data_file, "wb") as local_file:
+                    local_file.write(dvc_file.read())
+                logger.info(f'Downloaded data version from {self.config.dvc_file_path} to {self.config.local_data_file}')
 
         else:
             logger.info(f'File {self.config.local_data_file} already exists')
