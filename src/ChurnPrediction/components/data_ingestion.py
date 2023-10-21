@@ -3,7 +3,7 @@ import urllib.request as request
 from pathlib import Path
 from ChurnPrediction import logger
 from zipapp import zipfile
-from src.ChurnPrediction.utils.common import get_size
+from ChurnPrediction.utils.common import get_size
 from ChurnPrediction.entity.config_entity import DataIngestionConfig
 
 class DataIngestion:

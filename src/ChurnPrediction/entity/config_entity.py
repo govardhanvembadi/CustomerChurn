@@ -35,3 +35,12 @@ class ModelTrainerConfig:
     penalty: str
     solver: str
     target_column: str
+
+
+@dataclass
+class EvaluationConfig:
+    model_path : Path
+    test_data_path : Path
+    all_params : dict
+    target_column : str
+    scores_path : Path

@@ -3,7 +3,8 @@ from ChurnPrediction.utils.common import read_yaml, create_directory
 from ChurnPrediction.entity.config_entity import (  DataIngestionConfig, 
                                                     DataValidationConfig, 
                                                     DataTransformationConfig, 
-                                                    ModelTrainerConfig)
+                                                    ModelTrainerConfig,
+                                                    EvaluationConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -81,5 +82,21 @@ class ConfigurationManager:
         )
 
         return model_trainer_config
+    
+
+    def get_evaluation_config(self) -> EvaluationConfig:
+        config = self.config.model_evaluation
+        params = self.params.LogisticRegression
+        schema = self.schema.TARGET_COLUMN
+        
+        evaluation_config = EvaluationConfig(
+            model_path = config.model_path,
+            test_data_path = config.test_data_path,
+            all_params = params,
+            target_column = list(schema.keys())[0],
+            scores_path = config.scores_path
+        )
+
+        return evaluation_config
 
     
