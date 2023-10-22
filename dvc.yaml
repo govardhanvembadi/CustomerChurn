@@ -1,0 +1,51 @@
+stages:
+  data_ingestion:
+    cmd : python src/ChurnPrediction/pipeline/stage1_data_ingestion_pipeline.py
+    deps:
+      - src/ChurnPrediction/pipeline/stage1_data_ingestion_pipeline.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_ingestion/data.csv
+
+
+  data_validation:
+    cmd : python src/ChurnPrediction/pipeline/stage2_data_validation_pipeline.py
+    deps:
+      - src/ChurnPrediction/pipeline/stage2_data_validation_pipeline.py
+      - config/config.yaml
+      - schema.yaml
+    outs:
+      - artifacts/data_validation/status.txt
+
+
+  data_transformation:
+    cmd : python src/ChurnPrediction/pipeline/stage3_data_transformation_pipeline.py
+    deps:
+      - src/ChurnPrediction/pipeline/stage3_data_transformation_pipeline.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_transformation/train_data.csv
+      - artifacts/data_transformation/test_data.csv
+
+
+  model_trainer:
+    cmd : python src/ChurnPrediction/pipeline/stage4_model_trainer_pipeline.py
+    deps:
+      - src/ChurnPrediction/pipeline/stage4_model_trainer_pipeline.py
+      - config/config.yaml
+      - params.yaml
+    outs:
+      - artifacts/model/model.joblib
+
+
+  model_evaluation:
+    cmd : python src/ChurnPrediction/pipeline/stage5_model_evaluation_pipeline.py
+    deps:
+      - src/ChurnPrediction/pipeline/stage5_model_evaluation_pipeline.py
+      - config/config.yaml
+      - artifacts/model/model.joblib
+    metrics:
+    - scores.json:
+        cache: false
+    
+    

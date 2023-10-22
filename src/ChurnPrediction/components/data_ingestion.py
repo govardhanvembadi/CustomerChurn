@@ -13,14 +13,16 @@ class DataIngestion:
 
     def download_file(self):
         """
-            Downloads the data from the url specified in the config
+            Downloads the data from the dvc tracked repository(url provided).
+            dvc.api.open() function from the dvc API will help in downloading the latest version of data according to 
+            hash id present in the data.csv.dvc file. 
             return: None
         """
         if not os.path.exists(self.config.local_data_file):
             with dvc.api.open(self.config.dvc_file_path, repo = "https://github.com/Govardhan211103/CustomerChurn", mode = "rb") as dvc_file:
                 with open(self.config.local_data_file, "wb") as local_file:
                     local_file.write(dvc_file.read())
-                logger.info(f'Downloaded data version from {self.config.dvc_file_path} to {self.config.local_data_file}')
+            logger.info(f'Downloaded data version from {self.config.dvc_file_path} to {self.config.local_data_file}')
 
         else:
             logger.info(f'File {self.config.local_data_file} already exists')
