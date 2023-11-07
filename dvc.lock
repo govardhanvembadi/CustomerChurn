@@ -19,6 +19,10 @@ stages:
   data_validation:
     cmd: python src/ChurnPrediction/pipeline/stage2_data_validation_pipeline.py
     deps:
+    - path: artifacts/data_ingestion/data.csv
+      hash: md5
+      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
+      size: 977501
     - path: config/config.yaml
       hash: md5
       md5: d02584a5a2373f0895e4af613e8f1772
@@ -39,6 +43,10 @@ stages:
   data_transformation:
     cmd: python src/ChurnPrediction/pipeline/stage3_data_transformation_pipeline.py
     deps:
+    - path: artifacts/data_ingestion/data.csv
+      hash: md5
+      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
+      size: 977501
     - path: config/config.yaml
       hash: md5
       md5: d02584a5a2373f0895e4af613e8f1772
@@ -59,6 +67,14 @@ stages:
   model_trainer:
     cmd: python src/ChurnPrediction/pipeline/stage4_model_trainer_pipeline.py
     deps:
+    - path: artifacts/data_transformation/test_data.csv
+      hash: md5
+      md5: a9db94f4fc9ab96c2c1809c6970facff
+      size: 177922
+    - path: artifacts/data_transformation/train_data.csv
+      hash: md5
+      md5: 7c2ad021501e407398f8be618b55168a
+      size: 709054
     - path: config/config.yaml
       hash: md5
       md5: d02584a5a2373f0895e4af613e8f1772
@@ -67,10 +83,6 @@ stages:
       hash: md5
       md5: beddf8f5280f56f6ce0b6e92c4121fea
       size: 82
-    - path: src/ChurnPrediction/pipeline/stage3_data_transformation_pipeline.py
-      hash: md5
-      md5: 08967ad4bcc8b74e1fd5c0680930392c
-      size: 942
     - path: src/ChurnPrediction/pipeline/stage4_model_trainer_pipeline.py
       hash: md5
       md5: 943c4df89ba7eb6f9943dcb48e87d8a7
@@ -78,19 +90,31 @@ stages:
     outs:
     - path: artifacts/model/model.joblib
       hash: md5
-      md5: 8fab4fb537de1f49e4f1a417bd74495d
+      md5: c8795d6c83ba9a09f4048af84546e275
       size: 2079
   model_evaluation:
     cmd: python src/ChurnPrediction/pipeline/stage5_model_evaluation_pipeline.py
     deps:
     - path: artifacts/model/model.joblib
       hash: md5
-      md5: 8fab4fb537de1f49e4f1a417bd74495d
+      md5: c8795d6c83ba9a09f4048af84546e275
       size: 2079
     - path: config/config.yaml
       hash: md5
       md5: d02584a5a2373f0895e4af613e8f1772
       size: 1000
+    - path: params.yaml
+      hash: md5
+      md5: beddf8f5280f56f6ce0b6e92c4121fea
+      size: 82
+    - path: src/ChurnPrediction/components/model_evaluation.py
+      hash: md5
+      md5: 6125af4755188edc9368822cb4318368
+      size: 3968
+    - path: src/ChurnPrediction/config/configuration.py
+      hash: md5
+      md5: b9f9497ed6f66312d1d7b795587c318d
+      size: 3737
     - path: src/ChurnPrediction/pipeline/stage5_model_evaluation_pipeline.py
       hash: md5
       md5: ea6abee833c72c50c496834e24ce08e4

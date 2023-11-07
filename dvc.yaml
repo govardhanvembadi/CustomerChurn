@@ -12,6 +12,7 @@ stages:
     cmd : python src/ChurnPrediction/pipeline/stage2_data_validation_pipeline.py
     deps:
       - src/ChurnPrediction/pipeline/stage2_data_validation_pipeline.py
+      - artifacts/data_ingestion/data.csv
       - config/config.yaml
       - schema.yaml
     outs:
@@ -22,6 +23,7 @@ stages:
     cmd : python src/ChurnPrediction/pipeline/stage3_data_transformation_pipeline.py
     deps:
       - src/ChurnPrediction/pipeline/stage3_data_transformation_pipeline.py
+      - artifacts/data_ingestion/data.csv
       - config/config.yaml
     outs:
       - artifacts/data_transformation/train_data.csv
@@ -33,6 +35,8 @@ stages:
     deps:
       - src/ChurnPrediction/pipeline/stage4_model_trainer_pipeline.py
       - config/config.yaml
+      - artifacts/data_transformation/train_data.csv
+      - artifacts/data_transformation/test_data.csv
       - params.yaml
     outs:
       - artifacts/model/model.joblib
@@ -42,8 +46,11 @@ stages:
     cmd : python src/ChurnPrediction/pipeline/stage5_model_evaluation_pipeline.py
     deps:
       - src/ChurnPrediction/pipeline/stage5_model_evaluation_pipeline.py
+      - src/ChurnPrediction/components/model_evaluation.py
       - config/config.yaml
       - artifacts/model/model.joblib
+      - src/ChurnPrediction/config/configuration.py
+      - params.yaml
     metrics:
     - scores.json:
         cache: false

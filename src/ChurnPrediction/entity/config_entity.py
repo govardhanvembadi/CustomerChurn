@@ -44,3 +44,5 @@ class EvaluationConfig:
     all_params : dict
     target_column : str
     scores_path : Path
+    tracking_uri: str
+    experiment_name: str

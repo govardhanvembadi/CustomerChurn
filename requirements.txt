@@ -15,4 +15,5 @@ scipy
 Flask
 Flask-Cors
 dvc-gdrive
+mlflow
 -e . 
