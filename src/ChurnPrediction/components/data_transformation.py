@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
+import joblib
 
 from pathlib import Path
 from dataclasses import dataclass
@@ -18,6 +19,7 @@ from ChurnPrediction.entity.config_entity import DataTransformationConfig
 class DataTransformation:
     def __init__(self, config: DataTransformationConfig):
         self.config = config
+        self.preprocessor_file_path = "artifacts/model/preprocessor.joblib"
 
     def get_transformer_object(self) -> ColumnTransformer:
         try:
@@ -87,6 +89,9 @@ class DataTransformation:
         train_data, test_data = train_test_split(pd.concat([data_X_scaled, data_y], axis = 1), test_size=0.2, random_state=42, stratify = data_y)
         logger.info("Data spltting completed.")
 
+        # Save the proprocessor object into joblib file format
+        joblib.dump(preprocessor_object, Path(self.preprocessor_file_path))
+        logger.info("preprocessor object saved into joblib file format")
 
         # Save the train and test data to CSV files
         train_data.to_csv(self.config.train_data_path, index=False)
