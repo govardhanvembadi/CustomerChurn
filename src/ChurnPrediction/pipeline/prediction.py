@@ -21,7 +21,7 @@ class PredictionPipeline:
         logger.info(f'{data_preprocessed}')
 
         # Create a DataFrame with the preprocessed features
-        transformed_feature_names = preprocessor_object.get_feature_names_out(input_features = data.columns)
+        transformed_feature_names = preprocessor_object.get_feature_names_out()
         final_preprocessed_data = pd.DataFrame(data_preprocessed, columns=transformed_feature_names)
 
         logger.info(f"{final_preprocessed_data}")

@@ -16,4 +16,5 @@ Flask
 Flask-Cors
 dvc-gdrive
 mlflow
+streamlit
 -e . 
