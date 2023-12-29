@@ -13,12 +13,13 @@ from sklearn.model_selection import train_test_split
 
 from ChurnPrediction import logger
 from ChurnPrediction.entity.config_entity import DataTransformationConfig
-
+from ChurnPrediction.utils.common import create_directory
 
 
 class DataTransformation:
     def __init__(self, config: DataTransformationConfig):
         self.config = config
+        create_directory(["artifacts/model"])
         self.preprocessor_file_path = "artifacts/model/preprocessor.joblib"
 
     def get_transformer_object(self) -> ColumnTransformer:

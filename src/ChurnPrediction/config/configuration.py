@@ -96,7 +96,7 @@ class ConfigurationManager:
             target_column = list(schema.keys())[0],
             scores_path = config.scores_path,
             tracking_uri = "https://dagshub.com/Govardhan211103/CustomerChurn.mlflow",
-            experiment_name = "Experiment_2"
+            experiment_name = "Experiment3_by_Govardhan"
         )
 
         return evaluation_config
