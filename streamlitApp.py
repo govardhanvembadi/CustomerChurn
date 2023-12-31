@@ -5,14 +5,12 @@ import numpy as np
 from PIL import Image
 import joblib
 from pathlib import Path
+import mlflow
+import os
+from streamlit import runtime
+from ChurnPrediction.utils.common import create_directory
 
-# load the model
-model = joblib.load(Path('artifacts/model/model.joblib'))
-
-# load the preprocessing object
-preprocessor_object = joblib.load(Path('artifacts/model/preprocessor.joblib'))
-
-def main():
+def main(model, preprocessor_object):
     #Setting Application title
     st.title('Telecom Customer Churn Prediction Application')
 
@@ -123,4 +121,31 @@ def main():
 
             
 if __name__ == '__main__':
-        main()
+
+    if runtime.exists():
+        # And the root-level secrets are also accessible as environment variables:
+        try:
+            os.environ["MLFLOW_TRACKING_URI"] = st.secrets["MLFLOW_TRACKING_URI"]
+            os.environ["MLFLOW_TRACKING_PASSWORD"] = st.secrets["MLFLOW_TRACKING_PASSWORD"]
+            os.environ["MLFLOW_TRACKING_PASSWORD"] = st.secrets["MLFLOW_TRACKING_PASSWORD"]
+        except Exception as e:
+            raise e
+        
+        # Load model as a PyFuncModel.
+        logged_model = f'runs:/{st.secrets["run_id"]}/model'
+        model = mlflow.pyfunc.load_model(logged_model)
+
+        # load preprocessor object from mlflow artifacts belonging to given 'run_id'
+        create_directory([Path("local_artifacts")])
+        path = mlflow.artifacts.download_artifacts(run_id = st.secrets['run_id'],artifact_path= "model/preprocessor.joblib", dst_path="local_artifacts") 
+        preprocessor_object = joblib.load(path)
+
+    else:
+
+        model = joblib.load(Path('artifacts/model/model.joblib'))
+        # load the preprocessing object
+        preprocessor_object = joblib.load(Path('artifacts/model/preprocessor.joblib'))
+
+
+    # call the main function
+    main(model = model, preprocessor_object= preprocessor_object)

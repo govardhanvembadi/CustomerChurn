@@ -81,7 +81,8 @@ class Evaluation:
                 # Model registry does not work with file store
                 if tracking_url_type_store != "file":
                     # Register the model
-                    mlflow.sklearn.log_model(model, "model", registered_model_name="model_3")
+                    mlflow.sklearn.log_model(model, "model", registered_model_name="model2")
+                    mlflow.log_artifact(local_path = "artifacts/model")
                     logger.info("registered the model to the model registry")
                 else:
                     # log the model to the artifact store

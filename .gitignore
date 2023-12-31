@@ -162,3 +162,5 @@ cython_debug/
 
 artifacts/*
 mlruns/
+.streamlit/secrets.toml
+local_artifacts/
