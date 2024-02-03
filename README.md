@@ -1,6 +1,6 @@
 # Telecom Customer Churn Prediction
 
-![App Screenshot](app.jpg)
+![App Screenshot](app.png)
 
 ## Overview
 Predicting customer churn in the telecom industry means trying to find out which customers might leave for another service. To do this, we use smart computer programs called machine learning models. These models look at past customer information like who they are, how they use the service, how they pay, and how well the network works. By studying all these details, the models learn to predict if a customer is likely to leave soon.
